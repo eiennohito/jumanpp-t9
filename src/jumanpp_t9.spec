@@ -13,6 +13,9 @@ field 7 ptb_pos3 string
 # unk word handler: a basic one which will assign X to output
 unk any_char template row 1: single family_anything surface to [english,lemma]
 
+feature cpt1 = codepoint 1
+feature cpt2 = codepoint 2
+
 # analysis features
 
 # unigrams
@@ -23,6 +26,9 @@ ngram [ptb_pos1, ptb_pos2, ptb_pos3]
 ngram [ud_pos, ptb_pos2, ptb_pos3]
 ngram [surface, english]
 ngram [english, ud_pos, ptb_pos3]
+ngram [english, cpt1]
+ngram [english, cpt2]
+ngram [english, cpt1, cpt2]
 
 # bigrams
 ngram [english][english]
