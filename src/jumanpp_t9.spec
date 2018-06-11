@@ -13,6 +13,8 @@ field 7 ptb_pos3 string
 # unk word handler: a basic one which will assign X to output
 unk any_char template row 1: single family_anything surface to [english,lemma]
 
+# these two features "look into future"
+# they use next codepoint after the current node
 feature cpt1 = codepoint 1
 feature cpt2 = codepoint 2
 
