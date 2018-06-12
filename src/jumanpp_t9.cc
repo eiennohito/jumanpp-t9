@@ -38,9 +38,9 @@ struct ResultOutputter {
         return false;
       }
 
-      std::cout << surface[walker] << "\t" << english[walker] << "\n";
+      os << surface[walker] << "\t" << english[walker] << "\n";
     }
-    std::cout << std::endl;
+    os << std::endl;
     return true;
   }
 };
