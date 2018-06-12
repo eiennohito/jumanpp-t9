@@ -3,14 +3,6 @@ import collections
 
 IdHeaderLen = len("# sent_id = ")
 
-
-def mb_escape(s):
-    if '"' in s or ',' in s:
-        replaced = s.replace('"', '""')
-        return f'"{replaced}"'
-    return s
-
-
 mapping = collections.defaultdict(lambda: ord('0'), {
     # punctuation
     ord('.'): ord('1'),
@@ -38,7 +30,8 @@ mapping = collections.defaultdict(lambda: ord('0'), {
     ord('“'): ord('1'),
     ord('('): ord('1'),
     ord(')'): ord('1'),
-    ord(')'): ord('1'),
+    ord('['): ord('1'),
+    ord(']'): ord('1'),
     # alphabet
     ord('a'): ord('2'),
     ord('b'): ord('2'),
@@ -78,6 +71,13 @@ mapping = collections.defaultdict(lambda: ord('0'), {
     ord('8'): ord('8'),
     ord('9'): ord('9'),
 })
+
+
+def mb_escape(s):
+    if '"' in s or ',' in s:
+        replaced = s.replace('"', '""')
+        return f'"{replaced}"'
+    return s
 
 
 def process(fd):
