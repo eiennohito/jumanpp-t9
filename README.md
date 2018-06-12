@@ -46,7 +46,7 @@ For example, a to input "hello" you would type "43556".
 But if you provide spaces it is relatively easy to guess the correct word. 
 But how would we do if there were no spaces.
 For example, the previous sentence would be inputted as: 28846996853933643843739373667722371.
-In this case, we would need to segment digits into "words" and select words corresponding to those digits simultaniously.
+In this case, we would need to segment digits into "words" and select words corresponding to those digits simultaneously.
 
 This is what morphological analyzers for languages with continuous scripts (like Japanese or Chinese) have to do.
 They segment continuous text into tokens (morphemes) and tag them with additional information like lemmas (base forms)
@@ -165,7 +165,7 @@ A column #1 would be called "surface", have string type and a trie-based index
 for *surface* lookup would be built over this field.
 A column #2 would be called "english" and have string type.
 
-A single unigram feature, which uses both content of surface and english fields
+A single unigram feature, which uses both contents of surface and english fields
 would be used for path scoring.
 Finally, the loss would use both fields with the equal weight of 1.
 
@@ -186,7 +186,7 @@ cd build
 ```
 
 You can also try to train a model with `build/ud_en.train.corpus`,
-but the training will use around 6GB or RAM.
+but the training will use around 6GB of RAM.
 
 ## Driver Program
 
