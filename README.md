@@ -20,7 +20,7 @@ cd jumanpp-t9
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
-make -j jumanpp_tool jumanpp_t9
+make -j
 ```
 
 You should get a src/jumanpp_t9 binary.
@@ -261,3 +261,54 @@ Let's retrain our model with the new spec:
 
 Notice that the loss became much smaller than with the "nano" model.
 "And sometimes it does not" should be restored correctly this time.
+
+# Advanced Features
+
+## Using Code Generation for Linear Model Inference
+
+By default, Juman++ uses virtual function-based dynamic dispatch
+for evaluating feature-based model score.
+Indirection, caused by virtual function calls has a certain
+non-negligible performance penalty, especially for complex models.
+
+For the analysis we usually want to have all the speed we can get.
+For that Juman++ can generate static C++ code based on Analysis Spec.
+
+Ok, let's try (from the CMake `build` folder):
+
+```bash
+./jumanpp/src/core/tool/jumanpp_tool static-features \
+    --spec ../src/jumanpp_t9_mini.spec \
+    --class-name JppT9Mini \
+    --output codegen/t9_mini.cg
+```
+
+There should be two files: [`t9_mini.cg.h`](https://gist.github.com/eiennohito/5822be4a80a4fdbd88a569e6c5f10d4f#file-t9_mini-cg-h) 
+and [`t9_mini.cg.cc`](https://gist.github.com/eiennohito/5822be4a80a4fdbd88a569e6c5f10d4f#file-t9_mini-cg-cc) in the `codegen` subfolder.
+
+Now you need to inject the generated code into the driver program.
+[`jumanpp_t9.cc`](src/jumanpp_t9.cc) should contain this line in the `main` function.
+```cpp
+dieOnError(env.initFeatures(nullptr));
+```
+The `nullptr` parameter is a pointer to a `StaticFeatureFactory`
+which has a responsibility to create feature processing functionality for the inference.
+Passing there a pointer to an actual instance from the generated code will enable
+the faster analysis.
+
+A complete example is available at [`jumanpp_t9_static.cc`](src/jumanpp_t9_static.cc) 
+for the implementation and [CMakeLists.txt](src/CMakeLists.txt) for how to integrate
+everything into the build system.
+
+First you need to include 
+[`JumanppStaticFeatures.cmake`](https://github.com/ku-nlp/jumanpp/tree/master/cmake/JumanppStaticFeatures.cmake) 
+file from the Juman++ repository.
+That gives you a `jumanpp_gen_static` function which does the dirty work of invoking `jumanpp_tool`.
+The `jumanpp_gen_static` has 4 arguments:
+
+1. Analysis spec file
+1. Static feature factory class name
+1. A variable name which will be filled with the directory name where the C++ code will be generated. 
+   You will need to add that to `include_directories` of your driver binary.
+1. A variable name which will be filled with path to generated source files.
+   You will need to add that to the driver target source files.
