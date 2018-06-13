@@ -145,6 +145,7 @@ It will contains like:
 Analysis Spec defines the dictionary format,
 features used for scoring
 and the structure of the loss function.
+Read the [full documentation](https://github.com/ku-nlp/jumanpp/blob/master/docs/spec.md).
 
 A [minimal dictionary spec](src/jumanpp_t9_nano.spec) would be something like
 
