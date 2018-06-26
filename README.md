@@ -127,7 +127,7 @@ python3 scripts/conll2minicorpus.py <path to UD dir>/UD_English/en-ud-test.conll
 
 And now let's compile the dictionary itself using [another python script](scripts/minicorpus2minidic.py).
 ```bash
-python3 scripts/conll2minicorpus.py build/ud_en.*.corpus > build/ud_en.dic
+python3 scripts/minicorpus2minidic.py build/ud_en.*.corpus > build/ud_en.dic
 ```
 
 It will contains like: 
@@ -181,9 +181,9 @@ Let's do this!
 cd build
 ./jumanpp/src/core/tool/jumanpp_tool index \
     --spec ../src/jumanpp_t9_nano.spec \
-    --dict-file build/ud_en.dic \
+    --dict-file ud_en.dic \
     --output nano.seed
-../scripts/train.sh ./jumanpp/src/core/tool/jumanpp_tool nano.seed build/ud_en.dev.corpus dev.nano.model
+../scripts/train.sh ./jumanpp/src/core/tool/jumanpp_tool nano.seed ud_en.dev.corpus dev.nano.model
 ```
 
 You can also try to train a model with `build/ud_en.train.corpus`,
@@ -255,9 +255,9 @@ Let's retrain our model with the new spec:
 ```bash
 ./jumanpp/src/core/tool/jumanpp_tool index \
     --spec ../src/jumanpp_t9_mini.spec \
-    --dict-file build/ud_en.dic \
+    --dict-file ud_en.dic \
     --output mini.seed
-../scripts/train.sh ./jumanpp/src/core/tool/jumanpp_tool mini.seed build/ud_en.dev.corpus dev.mini.model
+../scripts/train.sh ./jumanpp/src/core/tool/jumanpp_tool mini.seed ud_en.dev.corpus dev.mini.model
 ```
 
 Notice that the loss became much smaller than with the "nano" model.
