@@ -186,7 +186,7 @@ cd build
 ../scripts/train.sh ./jumanpp/src/core/tool/jumanpp_tool nano.seed ud_en.dev.corpus dev.nano.model
 ```
 
-You can also try to train a model with `build/ud_en.train.corpus`,
+You can also try to train a model with `ud_en.train.corpus`,
 but the training will use around 6GB of RAM.
 
 ## Driver Program
